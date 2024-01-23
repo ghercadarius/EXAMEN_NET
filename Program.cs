@@ -27,7 +27,6 @@ namespace EXAMEN
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();
