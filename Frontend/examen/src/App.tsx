@@ -5,6 +5,8 @@ import axios from 'axios';
 import { BoredResponse } from './BoredResponse';
 import { Dog } from './Dog';
 import { config } from './config';
+import { Button, ListGroup } from 'react-bootstrap';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
@@ -14,8 +16,13 @@ function App() {
   const [name, setName] = React.useState("");
   const [rasa, setRasa] = React.useState("");
   const [culoare, setCuloare] = React.useState("");
+  const [owner, setOwner] = React.useState("");
+  const [prenume, setPrenume] = React.useState("");
+  const [adresa, setAdresa] = React.useState("");
+  const [telefon, setTelefon] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [lastDog, setLastDog] = React.useState<Dog | null>(null);
-  const [responseData, setResponseData] = React.useState<any[]>([]);
+  const [responseData, setResponseData] = React.useState<Dog[]>([]);
 
   
 
@@ -27,9 +34,9 @@ function App() {
         </p>
         
         <p>Ai apasat butonul de {pressCount}</p>
-        <button onClick = {() => setPressCount(pressCount + 1)}>
+        <Button variant = "primary" onClick = {() => setPressCount(pressCount + 1)}>
           Press me
-        </button>
+        </Button>
 
         <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={(e)=>{e.preventDefault()}}>
           <label> Nume </label>
@@ -60,27 +67,68 @@ function App() {
         </form>
 
         <p>Afiseaza toti cainii</p>
-        <button onClick = {() => {
+        <Button variant = "primary" onClick = {() => {
             axios.get("https://localhost:7032/api/Dog", config).then((response): void => {
             console.log(response.data);
             setResponseData(response.data);})
-        }}>Afiseaza</button>
+        }}>Afiseaza</Button>
           
           {
             responseData 
             ? (
               <div>
+                <ListGroup className='mt-3 mb-3'>
                 {responseData.map((dog) => {
                   return (
-                    <div>
-                      <p>{dog.nume + ' ' + dog.rasa + ' ' + dog.culoare}</p>
-                    </div>
+                    <ListGroup.Item>{dog.nume + ' ' + dog.culoare + ' ' + dog.rasa}</ListGroup.Item>
                   )
                 })}
+                </ListGroup>
               </div>
             )
             : "No dogs added yet"
           }
+
+        
+          <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={(e)=>{e.preventDefault()}}>
+          <label> Nume </label>
+          <input value={owner} className='form-input' type = "text" onChange={(e) => {
+            setOwner(e.target.value);
+          }}/>
+          <label> Prenume </label>
+          <input value={prenume} className='form-input' type = "text" onChange={(e) => {
+            setPrenume(e.target.value);
+          }}/>
+          <label> Adresa </label>
+          <input value = {adresa} className = 'form-input' type = "text" onChange={(e) => {
+            setAdresa(e.target.value);
+          }}/>
+          <label> Telefon </label>
+          <input value = {telefon} className = 'form-input' type = "text" onChange={(e) => {
+            setTelefon(e.target.value);
+          }}/>
+          <label> Email </label>
+          <input value = {email} className = 'form-input' type = "text" onChange={(e) => {
+            setEmail(e.target.value);
+          }}/>
+          <button className='button' onClick = {() => {
+            axios.post("https://localhost:7032/api/Owner", {
+              Nume: owner,
+              Prenume: prenume,
+              Adresa: adresa,
+              Email: email,
+              Telefon: telefon
+            }, config).then((response) => {
+              console.log(response.data);
+            })
+            
+            setCuloare("");
+            setName("");
+            setRasa("");
+          }}>Adauga animal</button>
+        </form>
+        
+
         {
           lastDog ? 
           <>
