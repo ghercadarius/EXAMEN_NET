@@ -5,6 +5,7 @@
         public string Nume { get; set; }
         public string Rasa { get; set; }
         public string Culoare { get; set; }
+
     }
 
 }

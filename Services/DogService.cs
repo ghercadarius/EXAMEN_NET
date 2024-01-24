@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EXAMEN.Models.Dog;
 using EXAMEN.Models.Dog.Dto;
+using EXAMEN.Models.Owner;
 using EXAMEN.Repositories.DogRepository;
 
 namespace EXAMEN.Services

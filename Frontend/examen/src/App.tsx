@@ -6,6 +6,7 @@ import { BoredResponse } from './BoredResponse';
 import { Dog } from './Dog';
 import { config } from './config';
 
+
 function App() {
 
   const [pressCount, setPressCount] = React.useState(0);
@@ -14,6 +15,7 @@ function App() {
   const [rasa, setRasa] = React.useState("");
   const [culoare, setCuloare] = React.useState("");
   const [lastDog, setLastDog] = React.useState<Dog | null>(null);
+  const [responseData, setResponseData] = React.useState<any[]>([]);
 
   
 
@@ -43,7 +45,7 @@ function App() {
             setCuloare(e.target.value);
           }}/>
           <button className='button' onClick = {() => {
-            axios.post("http://localhost:5244/api/Dog", {
+            axios.post("https://localhost:7032/api/Dog", {
               Nume: name,
               Rasa: rasa,
               Culoare: culoare
@@ -56,6 +58,29 @@ function App() {
             setRasa("");
           }}>Adauga animal</button>
         </form>
+
+        <p>Afiseaza toti cainii</p>
+        <button onClick = {() => {
+            axios.get("https://localhost:7032/api/Dog", config).then((response): void => {
+            console.log(response.data);
+            setResponseData(response.data);})
+        }}>Afiseaza</button>
+          
+          {
+            responseData 
+            ? (
+              <div>
+                {responseData.map((dog) => {
+                  return (
+                    <div>
+                      <p>{dog.nume + ' ' + dog.rasa + ' ' + dog.culoare}</p>
+                    </div>
+                  )
+                })}
+              </div>
+            )
+            : "No dogs added yet"
+          }
         {
           lastDog ? 
           <>

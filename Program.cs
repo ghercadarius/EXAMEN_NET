@@ -1,4 +1,5 @@
 
+using System.Text.Json.Serialization;
 using Examen.Helpers;
 using Examen.Helpers.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -16,8 +17,9 @@ namespace EXAMEN
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.WriteIndented = true;
-
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
+
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Examen")));
@@ -35,6 +37,11 @@ namespace EXAMEN
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

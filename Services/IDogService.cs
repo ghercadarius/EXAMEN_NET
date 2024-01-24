@@ -1,5 +1,6 @@
 ﻿using EXAMEN.Models.Dog;
 using EXAMEN.Models.Dog.Dto;
+using EXAMEN.Models.Owner;
 
 namespace EXAMEN.Services
 {

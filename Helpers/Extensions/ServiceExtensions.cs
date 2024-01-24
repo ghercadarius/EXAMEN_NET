@@ -2,6 +2,7 @@
 //using Examen.Services.SMTP;
 
 using EXAMEN.Repositories.DogRepository;
+using EXAMEN.Repositories.OwnerRepository;
 using EXAMEN.Services;
 
 namespace Examen.Helpers.Extensions
@@ -12,7 +13,7 @@ namespace Examen.Helpers.Extensions
         {
             //services.AddTransient<IUserRepository, UserRepository>();
             services.AddScoped<IDogRepository, DogRepository>();
-
+            services.AddScoped<IOwnerRepository, OwnerRepository>();
             return services;
         }
 
@@ -20,6 +21,8 @@ namespace Examen.Helpers.Extensions
         {
             //services.AddTransient<IAuthService, AuthService>();
             services.AddScoped<IDogService, DogService>();
+            services.AddScoped<IOwnerService, OwnerService>();
+            //services.AddScoped<EXAMEN.Services.DogService.DogService.IDogService, DogService>();
 
             return services;
         }
