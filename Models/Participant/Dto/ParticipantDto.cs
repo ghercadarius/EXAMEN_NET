@@ -5,5 +5,7 @@
         public string Nume { get; set; }
         public string Prenume { get; set; }
 
+        public bool Organizator { get; set; }
+
     }
 }
