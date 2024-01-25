@@ -21,7 +21,7 @@ namespace EXAMEN.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EXAMEN.Models.Dog.Dog", b =>
+            modelBuilder.Entity("EXAMEN.Models.Eveniment.Eveniment", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,7 +30,11 @@ namespace EXAMEN.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Culoare")
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Locatie")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -38,36 +42,19 @@ namespace EXAMEN.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("OwnerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Rasa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
-
-                    b.ToTable("Dogs");
+                    b.ToTable("Evenimente");
                 });
 
-            modelBuilder.Entity("EXAMEN.Models.Owner.Owner", b =>
+            modelBuilder.Entity("EXAMEN.Models.Participant.Participant", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Adresa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nume")
                         .IsRequired()
@@ -77,27 +64,39 @@ namespace EXAMEN.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Telefon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Owners");
+                    b.ToTable("Participanti");
                 });
 
-            modelBuilder.Entity("EXAMEN.Models.Dog.Dog", b =>
+            modelBuilder.Entity("EvenimentParticipant", b =>
                 {
-                    b.HasOne("EXAMEN.Models.Owner.Owner", "Owner")
-                        .WithMany("Dogs")
-                        .HasForeignKey("OwnerId");
+                    b.Property<Guid>("EvenimenteId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("Owner");
+                    b.Property<Guid>("ParticipantiId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("EvenimenteId", "ParticipantiId");
+
+                    b.HasIndex("ParticipantiId");
+
+                    b.ToTable("EvenimentParticipant");
                 });
 
-            modelBuilder.Entity("EXAMEN.Models.Owner.Owner", b =>
+            modelBuilder.Entity("EvenimentParticipant", b =>
                 {
-                    b.Navigation("Dogs");
+                    b.HasOne("EXAMEN.Models.Eveniment.Eveniment", null)
+                        .WithMany()
+                        .HasForeignKey("EvenimenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EXAMEN.Models.Participant.Participant", null)
+                        .WithMany()
+                        .HasForeignKey("ParticipantiId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

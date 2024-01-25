@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EXAMEN.Models.Dog;
-using EXAMEN.Models.Dog.Dto;
-using EXAMEN.Models.Owner;
-using EXAMEN.Models.Owner.Dto;
+using EXAMEN.Models.Eveniment;
+using EXAMEN.Models.Eveniment.Dto;
+using EXAMEN.Models.Participant;
+using EXAMEN.Models.Participant.Dto;
 
 namespace Examen.Helpers
 {
@@ -11,10 +11,10 @@ namespace Examen.Helpers
         public MapperProfile()
         {
             // CreateMap<Source, Destination>();
-            CreateMap<Dog, DogDto>();
-            CreateMap<DogDto, Dog>();
-            CreateMap<Owner, OwnerDto>();
-            CreateMap<OwnerDto, Owner>();
+            CreateMap<Participant, ParticipantDto>();
+            CreateMap<ParticipantDto, Participant>();
+            CreateMap<Eveniment, EvenimentDto>();
+            CreateMap<EvenimentDto, Eveniment>();
         }
     }
 }
