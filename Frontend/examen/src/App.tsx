@@ -188,6 +188,14 @@ function App() {
             "Nu au fost adaugate evenimente inca"
           )}
         </form>
+
+        <p>
+          Pentru endpoint-ul de adaugare de eveniment la participant si vice versa nu
+          mi-am dat saeama cum ar trebui sa apelez get-ul si cum as putea face DTO-ul
+          pentru a putea lua id-ul insa sa las si id-ul sa fie generat de catre baza
+          de date. Endpoint-ul de adaugare merge, doar ca nu este integrat in
+          front-end.
+        </p>
       </header>
     </div>
   )
