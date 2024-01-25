@@ -6,7 +6,6 @@
         public string Locatie { get; set; }
         public string Data { get; set; }
 
-        public Guid Id { get; set; }
 
     }
 }
